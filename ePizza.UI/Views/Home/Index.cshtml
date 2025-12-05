@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ItemResponseDto>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div style="background-color:skyblue">
+    <div class="container">
+        <div class="row pt-5">
+            <div class="col-sm-8">
+                <h1>Welcome to Pizza Ordering Application</h1>
+                <p class="pb-4">
+                    Delicious Pizza Delivered
+                </p>
+                <p>
+                    <a href="#heading" class="btn btn-success">ORDER ONLINE NOW</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-3">
+    <h1 class="mb-3">Pizza, Beverages</h1>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4 mb-3">
+                <div class="card">
+                    <img src="@Url.Content(item.ImageUrl)" class="card-img-top" />
+                    <div class="card-body">
+                        <h5>
+                            @item.Name
+                            <span class="float-end">@item.UnitPrice</span>
+                        </h5>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                    <div>
+                        <span>Size : Regular</span>
+                        <span class="float-end">
+                            <a class="btn btn-success" onclick="AddToCart(@item.Id, @item.UnitPrice,1)">Add To Cart</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<input type="hidden" id="baseUrl" value="@Url.Content("~/")" />
+@section Scripts {
+    <script src="~/js/cart.js" asp-append-version="true"></script>
+}

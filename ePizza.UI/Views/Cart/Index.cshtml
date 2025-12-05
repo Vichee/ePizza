@@ -1,0 +1,86 @@
+﻿@model CartResponseDto
+
+@{
+    ViewData["Title"] = "Cart Details";
+}
+
+<div>
+    @if (Model != null && Model.CartItems != null)
+    {
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Cart Items = (@Model.CartItems.Count())</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Details
+                                    </th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="@item.ImageUrl" style="width:50px; height:50px" />
+                                            <div>@item.ItemName</div>
+                                        </td>
+                                        <td> @item.UnitPrice</td>
+                                        <td> @item.Quantity</td>
+                                        <td>@item.ItemTotal</td>
+                                        <td><a class="btn btn-danger">Remove</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Summary</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>Total</td>
+                                <td>@Model.Total</td>
+                            </tr>
+                            <tr>
+                                <td>Tax</td>
+                                <td>@Model.Tax</td>
+                            </tr>
+                            <tr>
+                                <td>Grant Total</td>
+                                <td>@Model.GrantTotal</td>
+                            </tr>
+                        </table>
+                        @if (CurrentUser == null)
+                        {
+                            <a class="btn btn-danger" asp-controller="Login" asp-route-returnUrl="/Cart/Checkout" asp-action="Login">Login</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success" asp-controller="Cart" asp-action="Checkout">Checkout</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/cart.js" asp-append-version="true"></script>
+}
