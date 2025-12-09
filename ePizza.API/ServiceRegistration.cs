@@ -12,6 +12,9 @@ namespace ePizza.API
         public static IServiceCollection RegisterJwt(this IServiceCollection services,
             IConfiguration configuration)
         {
+            var secret = configuration["Jwt:Secret"];
+            if (string.IsNullOrEmpty(secret))
+                throw new InvalidOperationException("JWT Secret is missing in configuration.");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
